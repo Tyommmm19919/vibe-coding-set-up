@@ -1,0 +1,15 @@
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+
+sonata_admin:
+    title: '%env(APP_NAME)%'
+    search: true
+    global_search:
+        empty_boxes: show
+        admin_route: show
+    security:
+        handler: sonata.admin.security.handler.noop
+        role_admin: ROLE_ADMIN
+        role_super_admin: ROLE_SUPER_ADMIN

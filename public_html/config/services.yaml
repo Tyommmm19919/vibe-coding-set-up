@@ -1,0 +1,34 @@
+parameters:
+    locale: 'en'
+    locales: ['en']
+    uploads_directory: '%kernel.project_dir%/public/uploads'
+    app.mail_from: '%env(MAIL_FROM_ADDRESS)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    App\Services\FileUploader:
+        arguments:
+            $targetDirectory: '%uploads_directory%'
+
+    admin.user:
+        class: App\Admin\UserAdmin
+        public: true
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\User, manager_type: orm, group: Administration, label: Users }
+        calls:
+            - [setPasswordHasher, ['@security.user_password_hasher']]
+
+    admin.example_content:
+        class: App\Admin\ExampleContentAdmin
+        public: true
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\ExampleContent, manager_type: orm, group: Content, label: Example Content }

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ app_name }} · Starter{% endblock %}
+
+{% block body %}
+<section class="hero">
+    <p class="eyebrow">Symfony + Sonata starter</p>
+    <h1>Your architecture is ready.</h1>
+    <p>Build project-specific entities, controllers and templates on top of a working Doctrine, Security and Sonata Admin foundation.</p>
+    <div class="actions">
+        {% if app.user and is_granted('ROLE_ADMIN') %}
+            <a class="button" href="/admin">Open Sonata Admin</a>
+        {% else %}
+            <a class="button" href="{{ path('app_login') }}">Admin login</a>
+        {% endif %}
+        <a class="button secondary" href="{{ path('app_health') }}">Health check</a>
+    </div>
+</section>
+
+<section class="grid">
+    <article><h2>1. Create an entity</h2><code>php bin/console make:entity</code></article>
+    <article><h2>2. Add an Admin class</h2><p>Copy <code>ExampleContentAdmin</code> and change the fields.</p></article>
+    <article><h2>3. Register it</h2><p>Add one Sonata service tag in <code>config/services.yaml</code>.</p></article>
+</section>
+{% endblock %}

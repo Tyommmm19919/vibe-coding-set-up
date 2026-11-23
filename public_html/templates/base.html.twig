@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ app_name }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" href="{{ path('app_home') }}">{{ app_name }}</a>
+    <nav>
+        <a href="{{ path('app_home') }}">Home</a>
+        {% if app.user and is_granted('ROLE_ADMIN') %}<a href="/admin">Admin</a>{% endif %}
+        {% if app.user %}
+            <a href="{{ path('app_logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ path('app_login') }}">Login</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main class="page">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash flash-{{ label }}">{{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+    {% block body %}{% endblock %}
+</main>
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>
